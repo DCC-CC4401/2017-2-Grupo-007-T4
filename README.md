@@ -76,5 +76,3 @@ Para instalar y hacer correr esta plataforma se recomienda el uso de un ambiente
  django /path/to/manage.py makemigrations
  django /path/to/manage.py migrate
  ```
-
- 
