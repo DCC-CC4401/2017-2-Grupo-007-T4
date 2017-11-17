@@ -8,7 +8,7 @@
 {% block content %}
 
         {% if user.is_authenticated %}
-            <img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
+            <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="644,317,545,198"
                       shape="rect">
@@ -16,9 +16,14 @@
                       shape="rect">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="469,502,602,612"
                       shape="rect">
-            </map>
+            </map>-->
+            <section class="content container-fluid">
+
+                <div id="map" class="c-mapa"></div>
+
+            </section>
         {% else %}
-            <img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
+            <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
 
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="830,258,696,117"
@@ -27,16 +32,21 @@
                       shape="rect">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="469,505,604,614"
                       shape="rect">
-            </map>
+            </map>-->
+            <section class="content container-fluid">
+
+                <div id="map" class="c-mapa"></div>
+
+            </section>
         {% endif %}
 
-{% endblock %}
+<!--
 
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
+Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
 user experience.
-
+-->
 <script>
     function myMap() {
         var mapCanvas = document.getElementById("map");
@@ -82,7 +92,7 @@ user experience.
         infowindow.open(map, marker);
     }
 </script>
--->
-<!-- Mapa de google
+
+<!--Mapa de google-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk&callback=myMap"></script>
--->
+{% endblock %}
