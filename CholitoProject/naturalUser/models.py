@@ -5,6 +5,7 @@ from django.shortcuts import render
 
 class NaturalUser(models.Model):
     user = models.OneToOneField(User)
+    email = models.EmailField(max_length=100)
     avatar = models.ImageField(upload_to='n_users/avatar/')
 
     def save(self, *args, **kwargs):
@@ -19,3 +20,4 @@ class NaturalUser(models.Model):
 
     def get_index(self, request, context=None):
         return render(request, 'index.html', context=context)
+

@@ -86,7 +86,46 @@
 {% endblock %}
 
 {% block modal %}
-    <!-- Modal -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #0d6aad">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"
+                                                                                                   aria-hidden="true"
+                                                                                                   style="color: white"></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center; color: white">Cholito</h4>
+                </div>
+                <div class="modal-body">
+                    <h2 style="text-align: center">Ingresar</h2>
+                    <br>
+                    <form method="post" action="{% url 'auth' %}" id="LogIn">
+                        {% csrf_token %}
+                        <div style="text-align: center">
+                            <div class="form-group has-feedback" style="width: 60%; display: inline-block;">
+                                <input type="text" class="form-control" placeholder="Nombre de usuario" name="email">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback" style="width: 60%; display: inline-block;">
+                                <input type="password" class="form-control" placeholder="Contraseña" name="pass">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"
+                            style="float: left; width: 49%" onclick="$('#LogIn').submit();">Log In
+                    </button>
+                    <a href="{% url 'signup' %}" class="btn btn-success btn-lg"
+                       style="width: 49%">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

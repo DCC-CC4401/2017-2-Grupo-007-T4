@@ -14,18 +14,22 @@ class AuthView(View):
 
     def post(self, request, **kwargs):
         username = request.POST.get('email')
-        password = request.POST.get('password')
+        password = request.POST.get('pass')
+        print(username)
+        print(password)
         user = authenticate(username=username, password=password)
 
         if user is not None:
+            print("Hay usuario")
             current_user = get_user_index(user)
             if current_user is not None:
+                print("Hay current user")
                 login(request, user)
                 return redirect('/')
 
         messages.error(request,
                        "La combinación de usuario y contraseña no coincide")
-        return redirect('/login/')
+        return redirect('/signup/')
 
 
 class LogOutView(View):

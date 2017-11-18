@@ -1,41 +1,28 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from naturalUser.models import NaturalUser
 
 
-class SignUpForm(UserCreationForm):
-    username = forms.CharField(widget=forms.HiddenInput())
-    email = forms.EmailField(max_length=200,
-                             widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Email"}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nombre"}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Apellido"}))
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': "form-control", 'placeholder': "Contraseña"}))
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': "form-control", 'placeholder': "Confirma tu contraseña"}))
+class PersonRegisterForm(forms.Form):
+    tipo = forms.CharField(widget=forms.HiddenInput(), initial='Persona')
+    nombre = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
+    apellido = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
+    username = forms.CharField(label='Nombre de usuario', widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               required=True)
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+                               required=True)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}), required=True)
+    foto = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=True)
 
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'email',
-            'first_name',
-            'last_name',
-            'password1',
-            'password2',
-        )
+    def is_valid(self):
+        super(PersonRegisterForm, self).is_valid()
 
-    def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        user.username = self.cleaned_data["email"]
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-        if commit:
-            user.save()
-        return user
+        return self.cleaned_data['tipo'] == 'Persona'
 
+    def save(self):
+        user = User.objects.create_user(username=self.cleaned_data['username'], password=self.cleaned_data['password'])
+        user.first_name = self.cleaned_data['nombre']
+        user.last_name = self.cleaned_data['apellido']
 
-class AvatarForm(forms.Form):
-    avatar = forms.ImageField(
-        widget=forms.FileInput(attrs={'class': "form-control", 'placeholder': "Selecciona una imagen de perfil"}))
+        person = NaturalUser(user= user, avatar=self.cleaned_data['foto'], email=self.cleaned_data['email'])
+        person.save()

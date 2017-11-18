@@ -131,6 +131,8 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/example.com/static/'
 
+GOOGLE_API_KEY = 'AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 

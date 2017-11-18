@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 from .forms import new_animalForm
 from ong.models import ONG, ONGUser
 from animals.models import Animal
@@ -22,10 +23,11 @@ def addAnimal(request):
                                 animal_type=animal_type, estimated_age=estimated_age, ong_responsable=ong)
         else:
             return HttpResponseRedirect('/')
-
-        animal_obj.save()
-
-        return HttpResponseRedirect('/')
     else:
         form = new_animalForm()
         return render(request, 'ong_addanimal.html', {'form': form})
+
+class IndexView(TemplateView):
+    def get(self, request, **kwargs):
+        return render(request, 'ong-estadisticas.html', {})
+
