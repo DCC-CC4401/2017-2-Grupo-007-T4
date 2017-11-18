@@ -52,8 +52,6 @@ user experience.
         var mapCanvas = document.getElementById("map");
         var myCenter = new google.maps.LatLng(-33.457394, -70.664601);
         var centerOne = new google.maps.LatLng(-33.453291, -70.667269);
-        var centerTwo = new google.maps.LatLng(-33.455908, -70.674335);
-        var centerThree = new google.maps.LatLng(-33.466617, -70.676903);
         var mapOptions = {center: myCenter, zoom: 15};
         var map = new google.maps.Map(mapCanvas, mapOptions);
         var myCity = new google.maps.Circle({
@@ -67,21 +65,25 @@ user experience.
         });
         var map = new google.maps.Map(mapCanvas, mapOptions);
         myCity.setMap(map);
-        google.maps.event.addListener(map, 'click', function (event) {
-            placeMarker(map, event.latLng);
+
+        var myLatLng = {lat: -33.457394, lng:-70.664601};
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
         });
+
         var infowindow = new google.maps.InfoWindow({
             content: "ONG Favorita"
         });
-        var markerOne = new google.maps.Marker({
-            position: centerOne,
-            icon: "favorito.png"
-        });
-        markerOne.setMap(map);
-        infowindow.open(map, markerOne);
+        infowindow.open(map, marker);
+
+
+
     }
 
-    function placeMarker(map, location) {
+    /*function placeMarker(map, location) {
         var marker = new google.maps.Marker({
             position: location,
             map: map
@@ -90,7 +92,17 @@ user experience.
             content: 'Nombre ONG'
         });
         infowindow.open(map, marker);
-    }
+        {% for ONG in ongs %}
+                var myLatLng = {lat: {{ ONG.lat }}, lng:{{ ONG.lng }};
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Hello World!'
+                });
+                }
+            {% endfor %}
+    }*/
+
 </script>
 
 <!--Mapa de google-->
