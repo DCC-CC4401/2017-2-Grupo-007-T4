@@ -7,8 +7,8 @@
 
 {% block content %}
 
-        {% if user.is_authenticated %}
-            <img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
+    {% if user.is_authenticated %}
+        <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="644,317,545,198"
                       shape="rect">
@@ -16,9 +16,14 @@
                       shape="rect">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="469,502,602,612"
                       shape="rect">
-            </map>
-        {% else %}
-            <img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
+            </map>-->
+        <section class="content container-fluid">
+
+            <div id="map" class="c-mapa"></div>
+
+        </section>
+    {% else %}
+        <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
 
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="830,258,696,117"
@@ -27,62 +32,44 @@
                       shape="rect">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="469,505,604,614"
                       shape="rect">
-            </map>
+            </map>-->
+            <section class="content container-fluid">
+
+                <div id="map" class="c-mapa"></div>
+
+            </section>
         {% endif %}
 
-{% endblock %}
+<!--
 
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
+Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
 user experience.
-
+-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
-    function myMap() {
-        var mapCanvas = document.getElementById("map");
-        var myCenter = new google.maps.LatLng(-33.457394, -70.664601);
-        var centerOne = new google.maps.LatLng(-33.453291, -70.667269);
-        var centerTwo = new google.maps.LatLng(-33.455908, -70.674335);
-        var centerThree = new google.maps.LatLng(-33.466617, -70.676903);
-        var mapOptions = {center: myCenter, zoom: 15};
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        var myCity = new google.maps.Circle({
-            center: myCenter,
-            radius: 15,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.7,
-            strokeWeight: 2,
-            fillColor: "#0000FF",
-            fillOpacity: 0.4
-        });
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        myCity.setMap(map);
-        google.maps.event.addListener(map, 'click', function (event) {
-            placeMarker(map, event.latLng);
-        });
-        var infowindow = new google.maps.InfoWindow({
-            content: "ONG Favorita"
-        });
-        var markerOne = new google.maps.Marker({
-            position: centerOne,
-            icon: "favorito.png"
-        });
-        markerOne.setMap(map);
-        infowindow.open(map, markerOne);
-    }
+        var map;
+        function initialize()
+        {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
 
-    function placeMarker(map, location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-        var infowindow = new google.maps.InfoWindow({
-            content: 'Nombre ONG'
-        });
-        infowindow.open(map, marker);
-    }
-</script>
--->
-<!-- Mapa de google
+        var showPosition = function (position){
+            var myLatlng1 = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            var mapOptions =
+            {
+                zoom: 15,
+                center: myLatlng1
+            };
+            var map = new google.maps.Map(document.getElementById('map'),
+            mapOptions);
+           }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+<!--Mapa de google-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk&callback=myMap"></script>
--->
+{% endblock %}

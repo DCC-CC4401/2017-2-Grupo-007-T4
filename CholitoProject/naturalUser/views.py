@@ -1,5 +1,3 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
@@ -10,7 +8,7 @@ from complaint.models import AnimalType
 from naturalUser.forms import PersonRegisterForm
 from municipality.forms import MunicipalidadRegisterForm
 from ong.forms import ONGRegisterForm
-from naturalUser.models import NaturalUser
+from ong.models import ONG
 
 
 class IndexView(TemplateView):
@@ -21,6 +19,9 @@ class IndexView(TemplateView):
         self.context['c_user'] = c_user
         animals = AnimalType.objects.all()
         self.context['animals'] = animals
+        ongs = ONG.objects.all()
+        print(ongs)
+        self.context['ongs'] = ongs
         if c_user is None:
             return render(request, 'index.html', context=self.context)
         return c_user.get_index(request, context=self.context)

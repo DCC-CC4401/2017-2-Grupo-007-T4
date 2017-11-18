@@ -20,3 +20,4 @@ class NaturalUser(models.Model):
 
     def get_index(self, request, context=None):
         return render(request, 'index.html', context=context)
+
