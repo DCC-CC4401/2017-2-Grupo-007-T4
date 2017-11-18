@@ -29,7 +29,7 @@ class Animal(models.Model):
     animal_type = models.ForeignKey(AnimalType)
     color = models.IntegerField(choices= COLOR_OPTIONS)
     estimated_age = models.PositiveSmallIntegerField()
-    first_day = models.DateTimeField(auto_now_add=True)
+    first_day = models.DateTimeField(default=timezone.now())
     ong_responsable = models.ForeignKey(ONG, null=True)
     #days in adoption debe ser una funcion : fecha actual- dia ingres
     # TODO: for now
