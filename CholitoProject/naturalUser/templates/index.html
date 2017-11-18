@@ -7,8 +7,8 @@
 
 {% block content %}
 
-        {% if user.is_authenticated %}
-            <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
+    {% if user.is_authenticated %}
+        <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="644,317,545,198"
                       shape="rect">
@@ -17,13 +17,13 @@
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="469,502,602,612"
                       shape="rect">
             </map>-->
-            <section class="content container-fluid">
+        <section class="content container-fluid">
 
-                <div id="map" class="c-mapa"></div>
+            <div id="map" class="c-mapa"></div>
 
-            </section>
-        {% else %}
-            <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
+        </section>
+    {% else %}
+        <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
 
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="830,258,696,117"

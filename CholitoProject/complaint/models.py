@@ -27,6 +27,13 @@ class Complaint(models.Model):
         (4, "Cerrada"),
         (5, "Desechada"),
     )
+    COLOR_OPTIONS = (
+        (1, "marron"),
+        (2, "amarillo"),
+        (3, "blanco"),
+        (4, "gris"),
+        (5, "manchado"),
+    )
 
     GENDER_OPTIONS = (
         (1, "Macho"),
@@ -47,7 +54,7 @@ class Complaint(models.Model):
     animal_type = models.ForeignKey(AnimalType)
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
     wounded = models.BooleanField(choices=WOUND_OPTIONS)
-    color = models.TextField(max_length=50)
+    color = models.TextField(choices=COLOR_OPTIONS)
     municipality = models.ForeignKey(Municipality)
 
     def __str__(self):
