@@ -7,8 +7,8 @@
 
 {% block content %}
 
-        {% if user.is_authenticated %}
-            <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
+    {% if user.is_authenticated %}
+        <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="644,317,545,198"
                       shape="rect">
@@ -17,13 +17,13 @@
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="469,502,602,612"
                       shape="rect">
             </map>-->
-            <section class="content container-fluid">
+        <section class="content container-fluid">
 
-                <div id="map" class="c-mapa"></div>
+            <div id="map" class="c-mapa"></div>
 
-            </section>
-        {% else %}
-            <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
+        </section>
+    {% else %}
+        <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
 
             <map name="image-map">
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="830,258,696,117"
@@ -33,78 +33,70 @@
                 <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="469,505,604,614"
                       shape="rect">
             </map>-->
-            <section class="content container-fluid">
+        <section class="content container-fluid">
 
-                <div id="map" class="c-mapa"></div>
+            <div id="map" class="c-mapa"></div>
 
-            </section>
-        {% endif %}
+        </section>
+    {% endif %}
 
-<!--
-
-
-Optionally, you can add Slimscroll and FastClick plugins.
-Both of these plugins are recommended to enhance the
-user experience.
--->
-<script>
-    function myMap() {
-        var mapCanvas = document.getElementById("map");
-        var myCenter = new google.maps.LatLng(-33.457394, -70.664601);
-        var centerOne = new google.maps.LatLng(-33.453291, -70.667269);
-        var mapOptions = {center: myCenter, zoom: 15};
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        var myCity = new google.maps.Circle({
-            center: myCenter,
-            radius: 15,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.7,
-            strokeWeight: 2,
-            fillColor: "#0000FF",
-            fillOpacity: 0.4
-        });
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        myCity.setMap(map);
-
-        var myLatLng = {lat: -33.457394, lng:-70.664601};
-
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'Hello World!'
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-            content: "ONG Favorita"
-        });
-        infowindow.open(map, marker);
+    <!--
 
 
-
-    }
-
-    /*function placeMarker(map, location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-        var infowindow = new google.maps.InfoWindow({
-            content: 'Nombre ONG'
-        });
-        infowindow.open(map, marker);
-        {% for ONG in ongs %}
+    Optionally, you can add Slimscroll and FastClick plugins.
+    Both of these plugins are recommended to enhance the
+    user experience.
+    -->
+    <script>
+        function myMap() {
+            var mapCanvas = document.getElementById("map");
+            var myCenter = new google.maps.LatLng(-33.457394, -70.664601);
+            var centerOne = new google.maps.LatLng(-33.453291, -70.667269);
+            var mapOptions = {center: myCenter, zoom: 15};
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var myCity = new google.maps.Circle({
+                center: myCenter,
+                radius: 15,
+                strokeColor: "#0000FF",
+                strokeOpacity: 0.7,
+                strokeWeight: 2,
+                fillColor: "#0000FF",
+                fillOpacity: 0.4
+            });
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            myCity.setMap(map);
+            {% for ONG in ongs %}
                 var myLatLng = {lat: {{ ONG.lat }}, lng:{{ ONG.lng }};
+                alert(typeof {{ ONG.lat }})
                 var marker = new google.maps.Marker({
                     position: myLatLng,
                     map: map,
                     title: 'Hello World!'
                 });
-                }
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: "ONG Favorita"
+                });
+                infowindow.open(map, marker);
             {% endfor %}
+
+
+        }
+
+        /*function placeMarker(map, location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Nombre ONG'
+            });
+            infowindow.open(map, marker);
+
     }*/
 
-</script>
+    </script>
 
-<!--Mapa de google-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk&callback=myMap"></script>
+    <!--Mapa de google-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk&callback=myMap"></script>
 {% endblock %}

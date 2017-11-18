@@ -20,7 +20,7 @@ class IndexView(TemplateView):
         self.context['c_user'] = c_user
         animals = AnimalType.objects.all()
         self.context['animals'] = animals
-        ongs= ONG.objects.all()
+        ongs = ONG.objects.all()
         print(ongs)
         self.context['ongs'] = ongs
         if c_user is None:

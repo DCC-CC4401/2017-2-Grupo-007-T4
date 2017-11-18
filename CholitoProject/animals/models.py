@@ -2,6 +2,7 @@ from django.db import models
 
 from complaint.models import Complaint, AnimalType
 from naturalUser.models import NaturalUser
+from ong.models import ONG
 from datetime import datetime
 from django.utils import timezone
 
@@ -29,6 +30,7 @@ class Animal(models.Model):
     color = models.IntegerField(choices= COLOR_OPTIONS)
     estimated_age = models.PositiveSmallIntegerField()
     first_day = models.DateTimeField(auto_now_add=True)
+    ong_responsable = models.ForeignKey(ONG, null=True)
     #days in adoption debe ser una funcion : fecha actual- dia ingres
     # TODO: for now
     def __str__(self):
