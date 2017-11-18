@@ -7,7 +7,9 @@ from django.views.generic import TemplateView
 
 from CholitoProject.userManager import get_user_index
 from complaint.models import AnimalType
-from naturalUser.forms import SignUpForm, AvatarForm
+from naturalUser.forms import PersonRegisterForm
+from municipality.forms import MunicipalidadRegisterForm
+from ong.forms import ONGRegisterForm
 from naturalUser.models import NaturalUser
 
 
@@ -34,32 +36,32 @@ class LogInView(TemplateView):
 
 
 class SignUpView(View):
-    user_form = SignUpForm(initial={'username': 'dummy'}, prefix='user')
-    avatar_form = AvatarForm(prefix='avatar')
+    person_form = PersonRegisterForm()
+    muni_form = MunicipalidadRegisterForm()
+    ong_form = ONGRegisterForm()
+
     animals = AnimalType.objects.all()
-    context = {'user_form': user_form,
-               'avatar_form': avatar_form, 'animals': animals}
+    context = {'person': person_form, 'muni': muni_form, 'ong': ong_form, 'animals': animals}
     template_name = 'sign_up.html'
 
     def get(self, request, **kwargs):
         return render(request, self.template_name, context=self.context)
 
     def post(self, request, **kwargs):
-        user_form = SignUpForm(request.POST, prefix='user')
-        avatar_form = AvatarForm(request.POST, request.FILES, prefix='avatar')
-        if user_form.is_valid() and avatar_form.is_valid():
-            user_ = user_form.save()
-            user_.refresh_from_db()
-            natural_user = NaturalUser.objects.create(
-                user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
-            username = user_form.cleaned_data.get('email')
-            raw_password = user_form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/')
-        messages.error(request,
-                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarse")
-        return render(request, self.template_name, context=self.context)
+        person = PersonRegisterForm(request.POST, request.FILES)
+        muni = MunicipalidadRegisterForm(request.POST, request.FILES)
+        ong = ONGRegisterForm(request.POST, request.FILES)
+
+        if person.is_valid():
+            person.save()
+
+        if muni.is_valid():
+            muni.save()
+
+        if ong.is_valid():
+            ong.save()
+
+        return redirect('/')
 
 
 class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
