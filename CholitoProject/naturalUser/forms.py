@@ -12,7 +12,7 @@ class PersonRegisterForm(forms.Form):
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput(attrs={'class': 'form-control'}),
                                required=True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}), required=True)
-    foto = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=True)
+    foto = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
 
     def is_valid(self):
         super(PersonRegisterForm, self).is_valid()
