@@ -1,0 +1,39 @@
+{% extends "ong.html" %}
+
+{% block aplicacion %}
+    <table id="example2" class="table table-bordered table-hover" style="background-color: lightsteelblue">
+        {% if ult_list %}
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Foto</th>
+                <th>Sexo</th>
+                <th>edad</th>
+                <th>Fecha de Ingreso</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for Animal in ult_list %}
+                <tr>
+                    <td style="vertical-align:middle;"><a href="{% url 'animal:ficha' Animal.id %}">{{ Animal.nombre }}</a></td>
+                    <td style="vertical-align:middle;">{{ Animal.tipo }}</td>
+                    <td style="vertical-align:middle;">{{ Animal.foto.url }}</td>
+                    <td style="vertical-align:middle;">{{ Animal.sexo }}</td>
+                    <td style="vertical-align:middle;">{{ Animal.edad }}</td>
+                    <td style="vertical-align:middle;">{{ Animal.fecha_ingreso}}</td>
+
+
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+
+        {% else %}
+            <p style="color: Black">No hay animales en adopcion en esta ong.</p>
+
+        {% endif %}
+
+{% endblock aplicacion %}
