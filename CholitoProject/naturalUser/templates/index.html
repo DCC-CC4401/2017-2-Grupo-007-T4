@@ -54,18 +54,18 @@
             });
           {% for ONG in ongs %}
             //https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=FBC02D&scale=2.0
-            var cs{{ ONG.name }} = '<h5>{{ ONG.name }}</h5>';                           //contentString
-            var infowindow{{ ONG.name }} = new google.maps.InfoWindow({                 //infowindow
-                content: cs{{ ONG.name }}
+            var cs{{ ONG.id }} = '<h5>{{ ONG.name }}</h5>';                           //contentString
+            var infowindow{{ ONG.id }} = new google.maps.InfoWindow({                 //infowindow
+                content: cs{{ ONG.id }}
             });
-            var pos{{ ONG.name }} = new google.maps.LatLng({{ ONG.lat }},{{ ONG.lng }});   //position
-            var mark{{ ONG.name }} = new google.maps.Marker({                         //marker
-                position: pos{{ ONG.name }},
+            var pos{{ ONG.id }} = new google.maps.LatLng({{ ONG.lat }},{{ ONG.lng }});   //position
+            var mark{{ ONG.id }} = new google.maps.Marker({                         //marker
+                position: pos{{ ONG.id }},
                 map: map,
                 title: '{{ ONG.name }}'
             });
-            mark{{ ONG.name }}.addListener('click', function() {
-                infowindow{{ ONG.name }}.open(map, mark{{ ONG.name }});
+            mark{{ ONG.id }}.addListener('click', function() {
+                infowindow{{ ONG.id }}.open(map, mark{{ ONG.id }});
             });
           {% endfor %}
         };
