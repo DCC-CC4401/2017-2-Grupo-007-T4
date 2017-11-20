@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
+from django.conf import settings
 
 from CholitoProject.userManager import get_user_index
 from complaint.models import AnimalType
@@ -20,8 +21,8 @@ class IndexView(TemplateView):
         animals = AnimalType.objects.all()
         self.context['animals'] = animals
         ongs = ONG.objects.all()
-        print(ongs)
         self.context['ongs'] = ongs
+        self.context['key'] = settings.GOOGLE_API_KEY
         if c_user is None:
             return render(request, 'index.html', context=self.context)
         return c_user.get_index(request, context=self.context)
