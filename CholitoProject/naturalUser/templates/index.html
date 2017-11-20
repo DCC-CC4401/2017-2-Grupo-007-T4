@@ -50,8 +50,7 @@ user experience.
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
         var map;
-        function initialize()
-        {
+        function initialize(){
             navigator.geolocation.getCurrentPosition(showPosition);
         }
 
@@ -64,7 +63,34 @@ user experience.
             };
             var map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
-           }
+            var contentString = '<h3>Ud. esta aquí</h3>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            var gps = new google.maps.Marker({
+                position: myLatlng1,
+                map: map,
+                title: 'Ud. esta aquí'
+            });
+            gps.addListener('click', function() {
+                infowindow.open(map, gps);
+            });
+          {% for ONG in ongs %}
+            var cs{{ ONG.name }} = '<h3>{{ ONG.name }}</h3>';                           //contentString
+            var infowindow{{ ONG.name }} = new google.maps.InfoWindow({                               //infowindow
+                content: 'cs{{ ONG.name }}'
+            });
+            var {{ ONG.name }} = new google.maps.LatLng({{ ONG.lat }},{{ ONG.lng }});   //position
+            var marker{{ ONG.name }} = new google.maps.Marker({                         //marker
+                position: {{ ONG.name }},
+                map: map,
+                title: '{{ ONG.name }}'
+            });
+            gps.addListener('click', function() {
+                infowindow.open(map, marker{{ ONG.name }});
+            });
+          {% endfor %}
+        };
 
         google.maps.event.addDomListener(window, 'load', initialize);
 

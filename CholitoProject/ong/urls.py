@@ -7,4 +7,3 @@ urlpatterns = (
     url(r'^addAnimal/$', addAnimal, name="addAnimal"),
     url(r'^$', IndexView.as_view(), name='ong-inicio'),
 )
-
