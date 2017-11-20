@@ -1,4 +1,4 @@
-{% extends "ong-main.html" %}
+{% extends "main-ong.html" %}
 
 {% block sidebar %}
     <!-- Left side column. contains the logo and sidebar -->
@@ -9,7 +9,7 @@
                 <div class="user-panel">
                     <div class="pull-left image">
 
-                        <img src="{{ ONG.avatar }}" class="img-circle" alt="Ong Image">
+                        <img src="{{ ONG.avatar.url }}" class="img-circle" alt="Ong Image">
                     </div>
                     <div class="pull-left info">
 
@@ -21,7 +21,7 @@
                     <li>
                         <a href="{% url 'municipality-index' %}">
                             <i class="fa fa-bullhorn"></i>
-                            <span>Denuncias</span>
+                            <span>Solicitudes de Adopción</span>
                         </a>
                     </li>
                     <li class="treeview">
@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label for="exampleInputFile">Imagen de perfil</label>
                             <br>
-                            <img src="{{ ONG.avatar }}" class="ONG-image"
+                            <img src="{{ ONG.avatar.url }}" class="ONG-image"
                                  alt="ONG Image"
                                  width="150">
                             <br><br>

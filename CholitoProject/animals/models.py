@@ -6,6 +6,7 @@ from ong.models import ONG
 from datetime import datetime
 from django.utils import timezone
 
+
 class AnimalImage(models.Model):
     image = models.ImageField(upload_to='animals/')
     animal = models.ForeignKey('Animal', on_delete=models.CASCADE)
@@ -27,11 +28,12 @@ class Animal(models.Model):
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
     description = models.TextField(max_length=1000)
     animal_type = models.ForeignKey(AnimalType)
-    color = models.IntegerField(choices= COLOR_OPTIONS)
+    color = models.IntegerField(choices=COLOR_OPTIONS)
     estimated_age = models.PositiveSmallIntegerField()
     first_day = models.DateTimeField(default=timezone.now())
     ong_responsable = models.ForeignKey(ONG, null=True)
-    #days in adoption debe ser una funcion : fecha actual- dia ingres
+
+    # days in adoption debe ser una funcion : fecha actual- dia ingres
     # TODO: for now
     def __str__(self):
         return self.name + " - " + self.animal_type.name

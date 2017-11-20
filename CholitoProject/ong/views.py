@@ -2,32 +2,47 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .forms import new_animalForm
 from ong.models import ONG, ONGUser
-from animals.models import Animal
+from animals.models import Animal, AnimalImage
 from django.http import HttpResponseRedirect
 
 
 # Create your views here.
 def addAnimal(request):
     if request.POST:
-        animal = request.POST.get('animal')
-        gender = request.POST.get('gender')
-        color = request.POST.get('color')
-        name = request.POST.get('name')
-        gender = request.POST.get('gender')
-        description = request.POST.get('description')
-        animal_type = request.POST.get('animal_type')
-        estimated_age = request.POST.get('estimated_age')
-        if request.user.is_authenticated:
-            ong = ONGUser.objects.get(ong_id=request.user.id)
-            animal_obj = Animal(animal=animal, gender=gender, color=color, name=name, description=description,
-                                animal_type=animal_type, estimated_age=estimated_age, ong_responsable=ong)
-        else:
+        form = new_animalForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+
             return HttpResponseRedirect('/')
+
     else:
-        form = new_animalForm()
-        return render(request, 'ong_addanimal.html', {'form': form})
+        if request.user.is_authenticated():
+            ong = ONGUser.objects.get(user=request.user)
+            form = new_animalForm(initial={'ong': ong.ong.id})
+        else:
+            ong = None
+            form = None
+        return render(request, 'ong_addanimal.html', {'form': form, 'ONG': ong.ong})
+
 
 class IndexView(TemplateView):
     def get(self, request, **kwargs):
-        return render(request, 'ong-estadisticas.html', {})
+        if request.user.is_authenticated():
+            animals = []
+            ong = ONGUser.objects.get(user=request.user)
+            animals_ong = Animal.objects.filter(ong_responsable=ong.ong)
 
+            print(animals_ong)
+
+            for animal in animals_ong:
+                try:
+                    animal_image = AnimalImage.objects.get(animal=animal)
+                except:
+                    animal_image = None
+
+                animals.append({'animal': animal, 'image': animal_image})
+
+            return render(request, 'ong-landing.html', {'ONG': ong.ong, 'animals': animals})
+        else:
+            return render(request, 'ong-landing.html', {})
