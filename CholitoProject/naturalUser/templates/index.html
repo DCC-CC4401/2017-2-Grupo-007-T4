@@ -8,31 +8,12 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        <!--<img src="{% static 'images/fav.jpg' %}" usemap="#image-map"/>
-            <map name="image-map">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="644,317,545,198"
-                      shape="rect">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="693,129,828,252"
-                      shape="rect">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-in' %}" coords="469,502,602,612"
-                      shape="rect">
-            </map>-->
         <section class="content container-fluid">
 
             <div id="map" class="c-mapa"></div>
 
         </section>
     {% else %}
-        <!--<img src="{% static 'images/noFav.jpg' %}" usemap="#image-map"/>
-
-            <map name="image-map">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="830,258,696,117"
-                      shape="rect">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="551,204,643,307"
-                      shape="rect">
-                <area target="" alt="ong" title="ong" href="{% url 'user-ong-out' %}" coords="469,505,604,614"
-                      shape="rect">
-            </map>-->
             <section class="content container-fluid">
 
                 <div id="map" class="c-mapa"></div>
@@ -63,31 +44,34 @@ user experience.
             };
             var map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
-            var contentString = '<h3>Ud. esta aquí</h3>';
+            var contentString = '<h5>Ud. esta aquí</h5>';
             var infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
+            var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Outside-Chartreuse-icon.png';
             var gps = new google.maps.Marker({
                 position: myLatlng1,
                 map: map,
+                icon: image,
                 title: 'Ud. esta aquí'
             });
             gps.addListener('click', function() {
                 infowindow.open(map, gps);
             });
           {% for ONG in ongs %}
-            var cs{{ ONG.name }} = '<h3>{{ ONG.name }}</h3>';                           //contentString
-            var infowindow{{ ONG.name }} = new google.maps.InfoWindow({                               //infowindow
-                content: 'cs{{ ONG.name }}'
+            //https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=FBC02D&scale=2.0
+            var cs{{ ONG.name }} = '<h5>{{ ONG.name }}</h5>';                           //contentString
+            var infowindow{{ ONG.name }} = new google.maps.InfoWindow({                 //infowindow
+                content: cs{{ ONG.name }}
             });
-            var {{ ONG.name }} = new google.maps.LatLng({{ ONG.lat }},{{ ONG.lng }});   //position
-            var marker{{ ONG.name }} = new google.maps.Marker({                         //marker
-                position: {{ ONG.name }},
+            var pos{{ ONG.name }} = new google.maps.LatLng({{ ONG.lat }},{{ ONG.lng }});   //position
+            var mark{{ ONG.name }} = new google.maps.Marker({                         //marker
+                position: pos{{ ONG.name }},
                 map: map,
                 title: '{{ ONG.name }}'
             });
-            gps.addListener('click', function() {
-                infowindow.open(map, marker{{ ONG.name }});
+            mark{{ ONG.name }}.addListener('click', function() {
+                infowindow{{ ONG.name }}.open(map, mark{{ ONG.name }});
             });
           {% endfor %}
         };
@@ -97,5 +81,5 @@ user experience.
     </script>
 
 <!--Mapa de google-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKrwK5Ra7Lrbam0i1ifeMrlPHnN1Tctpk&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI3MzJQ-z8gIqgY0I9IbDR-8crRSRksNs&callback=myMap"></script>
 {% endblock %}
