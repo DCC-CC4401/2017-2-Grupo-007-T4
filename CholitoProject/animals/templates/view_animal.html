@@ -4,6 +4,26 @@
 
 {% block content-header %}{{ selected_animal.name }}{% endblock %}
 
+{% block sidebar %}
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left image">
+
+                    <img src="{{ ONG.avatar.url }}" class="img-circle" alt="Ong Image">
+                </div>
+                <div class="pull-left info">
+
+                    <p>{{ ONG.name }}</p>
+                </div>
+            </div>
+        </section>
+    </aside>
+{% endblock %}
+
 {% block content %}
     <!-- slider -->
     <div class="row">
@@ -79,7 +99,7 @@
     <script>
         $('#adopt').click(function () {
             var animal_id = $(this).attr("data-id");
-            $.get('{% url 'adopt' %}', {id: animal_id}, function (data) {
+            $.get('{% url 'animal:adopt' %}', {id: animal_id}, function (data) {
                 $('#the_adopters').html(data);
                 $('#adopt').hide();
                 alert("Hemos enviado tu información a la ONG correspondiente!");

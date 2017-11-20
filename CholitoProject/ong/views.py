@@ -4,6 +4,7 @@ from .forms import new_animalForm
 from ong.models import ONG, ONGUser
 from animals.models import Animal, AnimalImage
 from django.http import HttpResponseRedirect
+from CholitoProject.userManager import get_user_index
 
 
 # Create your views here.
@@ -33,8 +34,6 @@ class IndexView(TemplateView):
             ong = ONGUser.objects.get(user=request.user)
             animals_ong = Animal.objects.filter(ong_responsable=ong.ong)
 
-            print(animals_ong)
-
             for animal in animals_ong:
                 try:
                     animal_image = AnimalImage.objects.get(animal=animal)
@@ -46,3 +45,24 @@ class IndexView(TemplateView):
             return render(request, 'ong-landing.html', {'ONG': ong.ong, 'animals': animals})
         else:
             return render(request, 'ong-landing.html', {})
+
+
+def VistaExterna(request, ong_id):
+    animals = []
+    ong = ONG.objects.get(id=ong_id)
+
+    animals_ong = Animal.objects.filter(ong_responsable=ong)
+
+    if request.user.is_authenticated():
+        c_user = get_user_index(request.user)
+
+    for animal in animals_ong:
+        try:
+            animal_image = AnimalImage.objects.get(animal=animal)
+        except:
+            animal_image = None
+
+        animals.append({'animal': animal, 'image': animal_image})
+
+    return render(request, 'ong-landing-not-in.html', {'ONG': ong, 'animals': animals, 'c_user': c_user})
+
