@@ -55,6 +55,8 @@ def VistaExterna(request, ong_id):
 
     if request.user.is_authenticated():
         c_user = get_user_index(request.user)
+    else:
+        c_user = None
 
     for animal in animals_ong:
         try:
