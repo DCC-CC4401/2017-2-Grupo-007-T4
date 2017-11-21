@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.conf import settings
 
 from CholitoProject.userManager import get_user_index
 from complaint.forms import ComplaintForm, ImageForm
@@ -20,7 +21,7 @@ def ComplaintView(request):
         form = ComplaintForm()
         user = get_user_index(request.user)
 
-        return render(request, 'complaint.html', {'form': form, 'c_user': user})
+        return render(request, 'complaint.html', {'form': form, 'c_user': user, 'key': settings.GOOGLE_API_KEY})
 
 
 class ComplaintSendView(View):
