@@ -7,22 +7,23 @@ from complaint.forms import ComplaintForm, ImageForm
 from complaint.models import Complaint, ComplaintImage, AnimalType
 
 
-class ComplaintView(View):
-    form = ComplaintForm(
-        initial={'lat': 20, 'lng': 20, 'directions': "beauchef"}, prefix='complaint')
-    image_form = ImageForm(prefix='image')
-    animals = AnimalType.objects.all()
-    context = {'form': form, 'image_form': image_form, 'animals': animals}
-    template_name = 'complaint.html'
+def ComplaintView(request):
+    if request.POST:
+        form = ComplaintForm(request.POST, request.FILES)
 
-    def get(self, request, **kwargs):
+        if form.is_valid():
+            form.save()
+
+        return redirect('/')
+
+    else:
+        form = ComplaintForm()
         user = get_user_index(request.user)
-        self.context['c_user'] = user
-        return render(request, self.template_name, context=self.context)
+
+        return render(request, 'complaint.html', {'form': form, 'c_user': user})
 
 
 class ComplaintSendView(View):
-
     def post(self, request, **kwargs):
         form = ComplaintForm(request.POST, prefix='complaint')
         image_form = ImageForm(request.POST, request.FILES, prefix='image')

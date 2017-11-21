@@ -54,7 +54,7 @@
             });
           {% for ONG in ongs %}
             //https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=FBC02D&scale=2.0
-            var cs{{ ONG.id }} = '<a href="{% url 'ong:ong-not-in' ONG.id %}">{{ ONG.name }}</a>';                           //contentString
+            var cs{{ ONG.id }} = '<a href="{% url 'ong:ong-not-in' ONG.id %}"><h4>{{ ONG.name }}</h4><br><br><img src="{{ ONG.avatar.url }}" class="img-circle" alt="Ong Image" style="max-width: 150px"></a>';                           //contentString
             var infowindow{{ ONG.id }} = new google.maps.InfoWindow({                 //infowindow
                 content: cs{{ ONG.id }}
             });
@@ -77,3 +77,5 @@
 <!--Mapa de google-->
 <script src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=myMap"></script>
 {% endblock %}
+
+<h2 style="vertical-align: middle"
